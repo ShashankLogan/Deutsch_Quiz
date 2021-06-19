@@ -29,7 +29,7 @@ DEBUG = True
 #DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gentle-scrubland-57190.herokuapp.com',]
 
 
 # Application definition
