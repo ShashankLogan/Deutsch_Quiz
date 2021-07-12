@@ -4,12 +4,40 @@ from django.views.generic import ListView
 from django.http import JsonResponse
 from questions.models import Question, Answer
 from results.models import Result
+from django.template import loader
 
 # Create your views here.
 
 class QuizListView(ListView):
     model = Quiz
     template_name = 'quizes/main.html'
+
+def quiz_main(request):
+    quiz = Quiz.objects.all()
+    topics = list(set(Quiz.objects.only('topic')))
+    categories = list(set(Quiz.objects.only('topic')))
+    return render(request,'quizes/main.html',{'object_list':topics,'categories':categories})
+
+
+def ViewQuizListByCategory(request, *args, **kwargs):
+    '''
+    catego = get_object_or_404(
+        Category,
+        category=kwargs['category_name']
+    )
+    '''
+    topics = Quiz.objects.filter(topic =kwargs['category_name'])
+    if kwargs['category_name'] == "All":
+        topics = Quiz.objects.all()
+    categories = list(set(Quiz.objects.only('topic')))
+    #template = loader.get_template('main.html')
+
+    object_list = {
+        'topics': topics,
+        'categories':categories,
+    }
+    return render(request, 'quizes/main.html',{'object_list':topics,'categories':categories} ) #{'object_list':topics}
+    #return HttpResponse(template.render(context, request))
 
 def quiz_view(request,pk):
     quiz = Quiz.objects.get(pk=pk)

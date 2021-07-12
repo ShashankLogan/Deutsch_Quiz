@@ -3,8 +3,11 @@ console.log("Hello JS")
 const modalBtns = [...document.getElementsByClassName('modal-button')]
 const modalBody = document.getElementById("modal-body-confirm")
 const startBtn = document.getElementById('start-button')
-const url = window.location.href
-
+var url = window.location.href
+if(url.search("category") != -1){
+url = url.substring(0,url.search("category"))
+}
+console.log(url)
 modalBtns.forEach(modalBtn => modalBtn.addEventListener('click',()=>{
 const pk = modalBtn.getAttribute('data-pk')
 const name = modalBtn.getAttribute('data-quiz')
